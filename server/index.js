@@ -1,6 +1,6 @@
 const args = require('./bundles/args');
 const server = require('./bundles/server');
-const io = require('socket.io')(server);
+const io = require('socket.io')(server,{origins: ['*']});
 const redis = require("redis");
 const subscriber = redis.createClient(JSON.parse(args.sub));
 const publisher = redis.createClient(JSON.parse(args.pub));
