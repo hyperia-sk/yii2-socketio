@@ -27,6 +27,16 @@ trait CommandTrait
     public $ssl = [];
 
     /**
+     * @var string
+     */
+    public $allowedOrigins = '*';
+
+    /*
+     * @var string
+     */
+    public $allowedMethods = '*';
+
+    /**
      * Process job by id and connection
      */
     public function actionProcess($handler, $data)
@@ -52,6 +62,8 @@ trait CommandTrait
                 'port' => Broadcast::getDriver()->port,
                 'password' => Broadcast::getDriver()->password,
             ])),
+            'allowedOrigins' => $this->allowedOrigins,
+            'allowedMethods' => $this->allowedMethods,
             'channels' => implode(',', Broadcast::channels()),
             'nsp' => Broadcast::getManager()->nsp,
             'ssl' => empty($this->ssl) ? null : json_encode($this->ssl),

@@ -29,6 +29,20 @@ parser.addArgument(
     }
 );
 parser.addArgument(
+    ['-allowedOrigins', '--allowedOrigins'],
+    {
+        defaultValue: '*:*',
+        help: 'Access-Control-Allow-Origin'
+    }
+);
+parser.addArgument(
+    ['-allowedMethods', '--allowedMethods'],
+    {
+        defaultValue: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        help: 'Access-Control-Allow-Methods'
+    }
+);
+parser.addArgument(
     ['-sub', '--sub'],
     {
         defaultValue: '{host: localhost, port:6379}',
