@@ -11,13 +11,13 @@ const options = {
 };
 
 const server = args.ssl ? https.createServer(options, (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
-    res.setHeader('Access-Control-Allow-Methods', allowedMethods);
+    res.setHeader('Access-Control-Allow-Origin', args.allowedOrigin);
+    res.setHeader('Access-Control-Allow-Methods', args.allowedMethods);
 
     if (req.method === 'OPTIONS') {
         res.writeHead(204, {
-            'Access-Control-Allow-Origin': allowedOrigin,
-            'Access-Control-Allow-Methods': allowedMethods,
+            'Access-Control-Allow-Origin': args.allowedOrigin,
+            'Access-Control-Allow-Methods': args.allowedMethods,
             'Access-Control-Max-Age': 86400
         });
         res.end();
