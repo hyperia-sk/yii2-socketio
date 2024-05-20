@@ -50,17 +50,20 @@ trait CommandTrait
         Yii::getLogger()->flushInterval = 1;
 
         $cmd = sprintf('node %s/%s', realpath(dirname(__FILE__) . '/../server'), 'index.js');
+
         $args = array_filter([
             'server' => $this->server,
             'pub' => json_encode(array_filter([
                 'host' => Broadcast::getDriver()->hostname,
                 'port' => Broadcast::getDriver()->port,
                 'password' => Broadcast::getDriver()->password,
+                'url' => Broadcast::getDriver()->getUrl()
             ])),
             'sub' => json_encode(array_filter([
                 'host' => Broadcast::getDriver()->hostname,
                 'port' => Broadcast::getDriver()->port,
                 'password' => Broadcast::getDriver()->password,
+                'url' => Broadcast::getDriver()->getUrl()
             ])),
             'allowedOrigins' => $this->allowedOrigins,
             'allowedMethods' => $this->allowedMethods,

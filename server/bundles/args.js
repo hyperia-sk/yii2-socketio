@@ -45,15 +45,15 @@ parser.addArgument(
 parser.addArgument(
     ['-sub', '--sub'],
     {
-        defaultValue: '{host: localhost, port:6379}',
-        help: 'Redis subscriber server credential: [{host: localhost, port:6379}]'
+        defaultValue: '{url: redis://redis:6379}',
+        help: 'Redis subscriber server credential: [{url: redis://localhost:6379}]'
     }
 );
 parser.addArgument(
     ['-pub', '--pub'],
     {
-        defaultValue: '{host: localhost, port:6379}',
-        help: 'Redis publisher server credential: [{host: localhost, port:6379}]'
+        defaultValue: '{url: redis://redis:6379}',
+        help: 'Redis publisher server credential: [{url: redis://localhost:6379}]'
     }
 );
 parser.addArgument(

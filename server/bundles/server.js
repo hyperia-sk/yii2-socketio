@@ -1,12 +1,13 @@
 const args = require('./args');
 const https = require('https');
+const stackTrace = require('stack-trace');
 const http = require('http');
 const fs = require('fs');
 const ssl = JSON.parse(args.ssl);
 const dotenv = require('dotenv').config();
 
-const logStream = fs.createWriteStream('output.log', { flags: 'a' });
-const errorStream = fs.createWriteStream('error.log', { flags: 'a' });
+const logStream = fs.createWriteStream('/tmp/socketio-node-js-server.output.log', { flags: 'a' });
+const errorStream = fs.createWriteStream('/tmp/socketio-node-js-server.error.log', { flags: 'a' });
 
 console.log = (message) => {
     logStream.write(`${new Date().toISOString()} - INFO - ${message}\n`);
@@ -17,12 +18,20 @@ console.error = (message) => {
 };
 
 // Všeobecná obsluha chýb
-process.on('uncaughtException', (err) => {
-    console.log('Caught exception: ' + JSON.stringify(err));
+process.on('uncaughtException', (err, origin) => {
+    console.log(
+        `Caught exception: ${err}\n` +
+        `Exception origin: ${origin}\n`
+    );
 });
 
 process.on('unhandledRejection', (reason, promise) => {
+    const trace = stackTrace.parse(reason);
+    const file = trace[0].getFileName();
+    const line = trace[0].getLineNumber();
+    const column = trace[0].getColumnNumber();
     console.log('Unhandled Rejection at:' + JSON.stringify(promise) + 'reason:' + reason);
+    console.log(`In file: ${file}, at line: ${line}, column: ${column}`);
 });
 
 const options = {

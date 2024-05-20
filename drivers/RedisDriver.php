@@ -43,4 +43,9 @@ class RedisDriver
 
         return $this->connection;
     }
+
+    public function getUrl()
+    {
+        return 'redis://' . $this->hostname . ':' . $this->port;
+    }
 }
