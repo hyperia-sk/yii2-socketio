@@ -10,6 +10,25 @@ const RedisIO = require('./bundles/redis-io');
 (new RedisIO(args.nsp, io, subscriber, publisher, args.channels.split(',')))
     .listen();
 
+function isClientOpen(client) {
+    return client && client.connected;
+}
+
+if (isClientOpen(publisher)) {
+    console.log('Redis publisher WORKING');
+} else {
+    console.error('Redis publisher client is closed.');
+    console.log('pub' + JSON.stringify(publisher));
+    publisher.connect();
+}
+// Príklad použitia:
+if (isClientOpen(subscriber)) {
+    console.log('Redis subscriber WORKING');
+} else {
+    console.error('Redis subscriber client is closed.');
+    console.log('sub' + JSON.stringify(subscriber));
+    subscriber.connect();
+}
 
 server.listen(args.server.split(':')[1], args.server.split(':')[0]);
 
