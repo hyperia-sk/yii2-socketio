@@ -5,6 +5,26 @@ const fs = require('fs');
 const ssl = JSON.parse(args.ssl);
 const dotenv = require('dotenv').config();
 
+const logStream = fs.createWriteStream('output.log', { flags: 'a' });
+const errorStream = fs.createWriteStream('error.log', { flags: 'a' });
+
+console.log = (message) => {
+    logStream.write(`${new Date().toISOString()} - INFO - ${message}\n`);
+};
+
+console.error = (message) => {
+    errorStream.write(`${new Date().toISOString()} - ERROR - ${message}\n`);
+};
+
+// Všeobecná obsluha chýb
+process.on('uncaughtException', (err) => {
+    console.log('Caught exception: ' + JSON.stringify(err));
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.log('Unhandled Rejection at:' + JSON.stringify(promise) + 'reason:' + reason);
+});
+
 const options = {
     key: fs.readFileSync(ssl.key),
     cert: fs.readFileSync(ssl.cert)
