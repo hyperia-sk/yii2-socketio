@@ -6,17 +6,6 @@ const fs = require('fs');
 const ssl = JSON.parse(args.ssl);
 const dotenv = require('dotenv').config();
 
-const logStream = fs.createWriteStream('/tmp/socketio-node-js-server.output.log', { flags: 'a' });
-const errorStream = fs.createWriteStream('/tmp/socketio-node-js-server.error.log', { flags: 'a' });
-
-console.log = (message) => {
-    logStream.write(`${new Date().toISOString()} - INFO - ${message}\n`);
-};
-
-console.error = (message) => {
-    errorStream.write(`${new Date().toISOString()} - ERROR - ${message}\n`);
-};
-
 // Všeobecná obsluha chýb
 process.on('uncaughtException', (err, origin) => {
     console.log(

@@ -1,3 +1,16 @@
+const fs = require("fs");
+
+const logStream = fs.createWriteStream('/tmp/socketio-node-js-server.output.log', { flags: 'a' });
+const errorStream = fs.createWriteStream('/tmp/socketio-node-js-server.error.log', { flags: 'a' });
+
+console.log = (message) => {
+    logStream.write(`${new Date().toISOString()} - INFO - ${message}\n`);
+};
+
+console.error = (message) => {
+    errorStream.write(`${new Date().toISOString()} - ERROR - ${message}\n`);
+};
+
 const args = require('./bundles/args');
 const server = require('./bundles/server');
 const io = require('socket.io')(server,{origins: args.allowedOrigins});
