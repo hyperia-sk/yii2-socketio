@@ -1,75 +1,74 @@
 // Const
 const ArgumentParser = require('argparse').ArgumentParser;
 const parser = new ArgumentParser({
-    version: '1.0.0',
-    addHelp: true,
+    add_help: true,
     description: 'Nodejs proxy'
 });
 
-parser.addArgument(
-    ['-nsp', '--nsp'],
+parser.add_argument(
+    '-nsp', '--nsp',
     {
-        defaultValue: '',
-        help: 'Redis nsp. This value should be the same with "roadcastEvents" nsp'
+        default_value: '',
+        help: 'Redis nsp. This value should be the same with "BroadcastEvents" nsp'
     }
 );
 
-parser.addArgument(
-    ['-server', '--server'],
+parser.add_argument(
+    '-server', '--server',
     {
-        defaultValue: 'localhost:1337',
+        default_value: 'localhost:1337',
         help: 'Http server: [hostname:port]'
     }
 );
-parser.addArgument(
-    ['-channels', '--channels'],
+parser.add_argument(
+    '-channels', '--channels',
     {
-        defaultValue: 'socket.io',
+        default_value: 'socket.io',
         help: 'Redis channels. Example: --channels=\'c1,c2,c3\''
     }
 );
-parser.addArgument(
-    ['-allowedOrigins', '--allowedOrigins'],
+parser.add_argument(
+    '-allowedOrigins', '--allowedOrigins',
     {
-        defaultValue: '*:*',
+        default_value: '*:*',
         help: 'Access-Control-Allow-Origin'
     }
 );
-parser.addArgument(
+parser.add_argument(
     ['-allowedMethods', '--allowedMethods'],
     {
-        defaultValue: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        default_value: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
         help: 'Access-Control-Allow-Methods'
     }
 );
-parser.addArgument(
+parser.add_argument(
     ['-sub', '--sub'],
     {
-        defaultValue: '{url: redis://redis:6379}',
+        default_value: '{url: redis://redis:6379}',
         help: 'Redis subscriber server credential: [{url: redis://localhost:6379}]'
     }
 );
-parser.addArgument(
+parser.add_argument(
     ['-pub', '--pub'],
     {
-        defaultValue: '{url: redis://redis:6379}',
+        default_value: '{url: redis://redis:6379}',
         help: 'Redis publisher server credential: [{url: redis://localhost:6379}]'
     }
 );
-parser.addArgument(
-    ['-runtime', '--runtime'],
+parser.add_argument(
+    '-runtime', '--runtime',
     {
-        defaultValue: __dirname,
+        default_value: __dirname,
         help: 'Runtime path in the app'
     }
 );
-parser.addArgument(
-    ['-ssl', '--ssl'],
+parser.add_argument(
+    '-ssl', '--ssl',
     {
-        defaultValue: null,
+        default_value: null,
         help: 'SSL configs'
     }
 );
-const args = parser.parseArgs();
+const args = parser.parse_args();
 
 module.exports = args;
