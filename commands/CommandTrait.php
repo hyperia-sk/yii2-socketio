@@ -77,7 +77,6 @@ trait CommandTrait
         }
 
         $process = new Process($cmd);
-        $process->setWorkingDirectory(Yii::getAlias('@base'));
 
         return $process;
     }

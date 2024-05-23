@@ -27,19 +27,13 @@ function isClientOpen(client) {
     return client && client.connected;
 }
 
-if (isClientOpen(publisher)) {
-    console.log('Redis publisher WORKING');
-} else {
+if (!isClientOpen(publisher)) {
     console.error('Redis publisher client is closed.');
-    console.log('pub' + JSON.stringify(publisher));
     publisher.connect();
 }
 // Príklad použitia:
-if (isClientOpen(subscriber)) {
-    console.log('Redis subscriber WORKING');
-} else {
+if (!isClientOpen(subscriber)) {
     console.error('Redis subscriber client is closed.');
-    console.log('sub' + JSON.stringify(subscriber));
     subscriber.connect();
 }
 
