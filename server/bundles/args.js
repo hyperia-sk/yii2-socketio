@@ -46,7 +46,7 @@ parser.addArgument(
     ['-speedLimit', '--speedLimit'],
     {
         defaultValue: 3,
-        help: 'Number of connection to Redis'
+        help: 'Allowed number of messages in time (No checks = 0)'
     }
 );
 parser.addArgument(
