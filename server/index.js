@@ -31,7 +31,6 @@ if (!isClientOpen(publisher)) {
     console.error('Redis publisher client is closed.');
     publisher.connect();
 }
-// Príklad použitia:
 if (!isClientOpen(subscriber)) {
     console.error('Redis subscriber client is closed.');
     subscriber.connect();

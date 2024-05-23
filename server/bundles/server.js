@@ -6,7 +6,6 @@ const fs = require('fs');
 const ssl = JSON.parse(args.ssl);
 const dotenv = require('dotenv').config();
 
-// Všeobecná obsluha chýb
 process.on('uncaughtException', (err, origin) => {
     console.log(
         `Caught exception: ${err}\n` +
