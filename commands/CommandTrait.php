@@ -27,6 +27,21 @@ trait CommandTrait
     public $ssl = [];
 
     /**
+     * @var string
+     */
+    public $allowedOrigins = '*';
+
+    /*
+     * @var string
+     */
+    public $allowedMethods = '*';
+
+    /**
+     * @var int
+     */
+    public $speedLimit = 3;
+
+    /**
      * Process job by id and connection
      */
     public function actionProcess($handler, $data)
@@ -40,30 +55,34 @@ trait CommandTrait
         Yii::getLogger()->flushInterval = 1;
 
         $cmd = sprintf('node %s/%s', realpath(dirname(__FILE__) . '/../server'), 'index.js');
+
         $args = array_filter([
             'server' => $this->server,
             'pub' => json_encode(array_filter([
                 'host' => Broadcast::getDriver()->hostname,
                 'port' => Broadcast::getDriver()->port,
                 'password' => Broadcast::getDriver()->password,
+                'url' => Broadcast::getDriver()->getUrl()
             ])),
             'sub' => json_encode(array_filter([
                 'host' => Broadcast::getDriver()->hostname,
                 'port' => Broadcast::getDriver()->port,
                 'password' => Broadcast::getDriver()->password,
+                'url' => Broadcast::getDriver()->getUrl()
             ])),
+            'allowedOrigins' => $this->allowedOrigins,
+            'allowedMethods' => $this->allowedMethods,
             'channels' => implode(',', Broadcast::channels()),
             'nsp' => Broadcast::getManager()->nsp,
             'ssl' => empty($this->ssl) ? null : json_encode($this->ssl),
+            'speedLimit' => $this->speedLimit,
             'runtime' => Yii::getAlias('@runtime/logs'),
         ], 'strlen');
         foreach ($args as $key => $value) {
             $cmd .= ' -' . $key . '=\'' . $value . '\'';
         }
 
-        $process = new Process($cmd);
-
-        return $process;
+        return new Process($cmd);
     }
 
     /**

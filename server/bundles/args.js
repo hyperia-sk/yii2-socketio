@@ -29,17 +29,38 @@ parser.addArgument(
     }
 );
 parser.addArgument(
+    ['-allowedOrigins', '--allowedOrigins'],
+    {
+        defaultValue: '*:*',
+        help: 'Access-Control-Allow-Origin'
+    }
+);
+parser.addArgument(
+    ['-allowedMethods', '--allowedMethods'],
+    {
+        defaultValue: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        help: 'Access-Control-Allow-Methods'
+    }
+);
+parser.addArgument(
+    ['-speedLimit', '--speedLimit'],
+    {
+        defaultValue: 3,
+        help: 'Allowed number of messages in time (No checks = 0)'
+    }
+);
+parser.addArgument(
     ['-sub', '--sub'],
     {
-        defaultValue: '{host: localhost, port:6379}',
-        help: 'Redis subscriber server credential: [{host: localhost, port:6379}]'
+        defaultValue: '{url: redis://redis:6379}',
+        help: 'Redis subscriber server credential: [{url: redis://localhost:6379}]'
     }
 );
 parser.addArgument(
     ['-pub', '--pub'],
     {
-        defaultValue: '{host: localhost, port:6379}',
-        help: 'Redis publisher server credential: [{host: localhost, port:6379}]'
+        defaultValue: '{url: redis://redis:6379}',
+        help: 'Redis publisher server credential: [{url: redis://localhost:6379}]'
     }
 );
 parser.addArgument(
