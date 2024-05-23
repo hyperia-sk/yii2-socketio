@@ -2,6 +2,7 @@ const RoomIO = require('./room-io');
 const AccessIO = require('./access-io');
 const logger = require('./logger');
 const util = require('util');
+const args = require('./args');
 
 class RedisIO {
     constructor(nsp, io, sub, pub, channels) {
@@ -10,6 +11,10 @@ class RedisIO {
         this.sub = sub;
         this.pub = pub;
         this.channels = channels;
+
+        if (args.speedLimit) {
+            process.env.SOCKET_IO_SPEED_LIMIT = args.speedLimit;
+        }
     }
 
     /**

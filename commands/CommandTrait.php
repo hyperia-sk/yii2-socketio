@@ -37,6 +37,11 @@ trait CommandTrait
     public $allowedMethods = '*';
 
     /**
+     * @var int
+     */
+    public $speedLimit = 3;
+
+    /**
      * Process job by id and connection
      */
     public function actionProcess($handler, $data)
@@ -70,15 +75,14 @@ trait CommandTrait
             'channels' => implode(',', Broadcast::channels()),
             'nsp' => Broadcast::getManager()->nsp,
             'ssl' => empty($this->ssl) ? null : json_encode($this->ssl),
+            'speedLimit' => $this->speedLimit,
             'runtime' => Yii::getAlias('@runtime/logs'),
         ], 'strlen');
         foreach ($args as $key => $value) {
             $cmd .= ' -' . $key . '=\'' . $value . '\'';
         }
 
-        $process = new Process($cmd);
-
-        return $process;
+        return new Process($cmd);
     }
 
     /**

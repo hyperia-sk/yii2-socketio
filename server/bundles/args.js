@@ -43,6 +43,13 @@ parser.addArgument(
     }
 );
 parser.addArgument(
+    ['-speedLimit', '--speedLimit'],
+    {
+        defaultValue: 3,
+        help: 'Number of connection to Redis'
+    }
+);
+parser.addArgument(
     ['-sub', '--sub'],
     {
         defaultValue: '{url: redis://redis:6379}',
