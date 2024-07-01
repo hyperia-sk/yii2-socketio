@@ -1,7 +1,7 @@
 const fs = require("fs");
 
-const logStream = fs.createWriteStream('/tmp/output.log', { flags: 'a' });
-const errorStream = fs.createWriteStream('/tmp/error.log', { flags: 'a' });
+const logStream = fs.createWriteStream('/tmp/socketio-node-js-server.output.log', { flags: 'a' });
+const errorStream = fs.createWriteStream('/tmp/socketio-node-js-server.error.log', { flags: 'a' });
 
 console.log = (message) => {
     logStream.write(`${new Date().toISOString()} - INFO - ${message}\n`);
