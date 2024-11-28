@@ -79,8 +79,15 @@ class Process
      */
     private function push(string $handle, array $data): \Symfony\Component\Process\Process
     {
-        $cmd = HtmlPurifier::process(sprintf('php yii socketio/process %s %s', escapeshellarg($handle), escapeshellarg(json_encode($data))));
+        $cmd = 'php';
+        $arguments = [
+            'yii',
+            'socketio/process',
+            escapeshellarg($handle),
+            escapeshellarg(json_encode($data))
+        ];
 
+// Overenie yii aliasu
         if (is_null($this->yiiAlias)) {
             if (file_exists(Yii::getAlias('@app/yii'))) {
                 $this->yiiAlias = '@app';
@@ -89,7 +96,11 @@ class Process
             }
         }
 
-        $process = new \Symfony\Component\Process\Process($cmd, Yii::getAlias($this->yiiAlias));
+// Vytvorenie procesu
+        $process = new \Symfony\Component\Process\Process(
+            array_merge([$cmd], $arguments),
+            Yii::getAlias($this->yiiAlias) // pracovný adresár
+        );
         $process->setTimeout(10);
         $process->start();
 
