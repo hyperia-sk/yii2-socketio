@@ -83,11 +83,10 @@ class Process
         $arguments = [
             'yii',
             'socketio/process',
-            escapeshellarg($handle),
-            escapeshellarg(json_encode($data))
+            $handle,
+            json_encode($data)
         ];
 
-// Overenie yii aliasu
         if (is_null($this->yiiAlias)) {
             if (file_exists(Yii::getAlias('@app/yii'))) {
                 $this->yiiAlias = '@app';
@@ -96,10 +95,9 @@ class Process
             }
         }
 
-// Vytvorenie procesu
         $process = new \Symfony\Component\Process\Process(
             array_merge([$cmd], $arguments),
-            Yii::getAlias($this->yiiAlias) // pracovný adresár
+            Yii::getAlias($this->yiiAlias)
         );
         $process->setTimeout(10);
         $process->start();
