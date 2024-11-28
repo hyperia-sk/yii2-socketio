@@ -54,7 +54,7 @@ trait CommandTrait
         // Automatically send every new message to available log routes
         Yii::getLogger()->flushInterval = 1;
 
-        $cmd = sprintf('node %s/%s', realpath(dirname(__FILE__) . '/../server'), 'index.js');
+        $cmd = sprintf('%s/%s', realpath(dirname(__FILE__) . '/../server'), 'index.js');
 
         $args = array_filter([
             'server' => $this->server,
@@ -78,11 +78,13 @@ trait CommandTrait
             'speedLimit' => $this->speedLimit,
             'runtime' => Yii::getAlias('@runtime/logs'),
         ], 'strlen');
+        $processArguments = ['node', $cmd];
+
         foreach ($args as $key => $value) {
-            $cmd .= ' -' . $key . '=\'' . $value . '\'';
+            $processArguments[] = '-' . $key . '=' . $value;
         }
 
-        return new Process($cmd);
+        return new Process($processArguments);
     }
 
     /**
